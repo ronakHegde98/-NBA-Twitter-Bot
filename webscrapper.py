@@ -20,7 +20,7 @@ def regularSeasonPlayer(playerName):
 
     for x in range (len(season19)):
         if(season19[x]['name'].replace(" " ,"").upper() == playerName):
-            points = (points + (season19[x]['made_field_goals'])*2 + (season19[x]['made_three_point_field_goals'])*3 + (season19[x]['made_free_throws'])*1)/(season19[x]['games_played'])
+            points = (points + (season19[x]['made_field_goals']-season19[x]['made_three_point_field_goals'])*2 + (season19[x]['made_three_point_field_goals'])*3 + (season19[x]['made_free_throws'])*1)/(season19[x]['games_played'])
             playerStats.append(points)
             #print (points)
 
