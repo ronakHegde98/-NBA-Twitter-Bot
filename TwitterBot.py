@@ -70,6 +70,7 @@ for x in range(len(mention_tweets)):
     elif(isTeam):
       print(mention_tweet,end = " ")
       print(ws.regularSeasonTeam(mention_tweet.upper()))
+      print(ws.streakStatus(mention_tweet.upper()))
     else:
       print("error! you are not a player or a team")
 
