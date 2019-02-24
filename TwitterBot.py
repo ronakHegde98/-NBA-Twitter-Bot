@@ -1,5 +1,6 @@
 import tweepy
 import players as players_file
+import webscrapper as ws
 import team 
 import json
 
@@ -58,16 +59,22 @@ for x in range(len(mention_tweets)):
 
   isPlayer = checkPlayerStatus(mention_tweet.replace("live","").strip().upper())
 
+
   if(isPlayer and "live" in mention_tweet):
-    livePlayerStats(mention_tweet.replace("live","").upper())
+    #livePlayerStats(mention_tweet.replace("live","").upper())
+    pass
   elif(isPlayer):
-    regularSeasonPlayer(mention_tweet.upper())
+    print(mention_tweet,end = " ")
+    print(ws.regularSeasonPlayer(mention_tweet.upper()))
   else:
     isTeam = checkTeamStatus(mention_tweet.replace("live", "").upper())
+    
     if(isTeam and "live" in mention_tweet):
-      liveTeamStats(mention_tweet.replace("live",""))
+      #liveTeamStats(mention_tweet.replace("live",""))
+      pass
     elif(isTeam):
-      regularSeasonTeam(mention_tweet)
+      print(mention_tweet,end = " ")
+      print(ws.regularSeasonTeam(mention_tweet.upper()))
     else:
       print("error! you are not a player or a team")
 

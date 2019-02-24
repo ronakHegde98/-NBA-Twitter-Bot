@@ -15,7 +15,7 @@ def regularSeasonPlayer(playerName):
 
     for x in range (len(season19)):
         if(season19[x]['name'].replace(" " ,"").upper() == playerName):
-            playerStats.append((season19[x]['assists']))
+            playerStats.append((season19[x]['assists'])/(season19[x]['games_played']))
             #print((season19[x]['assists']))
 
     for x in range (len(season19)):
@@ -27,10 +27,11 @@ def regularSeasonPlayer(playerName):
     for x in range (len(season19)):
         if(season19[x]['name'].replace(" " ,"").upper() == playerName):
             rebounds = ((season19[x]['offensive_rebounds'])) + ((season19[x]['defensive_rebounds']))
-            playerStats.append(rebounds)
+            playerStats.append(rebounds/(season19[x]['games_played']))
             #print (rebounds)
 
     return playerStats
+
 def regularSeasonTeam(teamName):
 
     seasonSchedule = client.season_schedule(season_end_year=2019)
@@ -42,12 +43,12 @@ def regularSeasonTeam(teamName):
         if(seasonSchedule[x]['away_team_score'] == None):
             break
         else:
-            if(str(seasonSchedule[x]['away_team']).replace("Team." ,"").replace("_" ,"") == teamName):
+            if(str(seasonSchedule[x]['away_team']).replace("Team." ,"").replace("_" ,"") == teamName or teamName in str(seasonSchedule[x]['away_team']).replace("Team." ,"").replace("_" ,"")):
                 if(seasonSchedule[x]['away_team_score'] > seasonSchedule[x]['home_team_score']):
                     wins += 1
                 if(seasonSchedule[x]['away_team_score'] < seasonSchedule[x]['home_team_score']):
                     losses += 1
-            if(str(seasonSchedule[x]['home_team']).replace("Team." ,"").replace("_" ,"") == teamName):
+            if(str(seasonSchedule[x]['home_team']).replace("Team." ,"").replace("_" ,"") == teamName or teamName in str(seasonSchedule[x]['home_team']).replace("Team." ,"").replace("_" ,"")):
                 if(seasonSchedule[x]['home_team_score'] > seasonSchedule[x]['away_team_score']):
                     wins += 1
                 if(seasonSchedule[x]['home_team_score'] < seasonSchedule[x]['away_team_score']):
