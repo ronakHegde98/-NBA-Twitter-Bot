@@ -21,6 +21,8 @@ api = tweepy.API(auth)
 # list of mention tweets
 mention_tweets = api.mentions_timeline()
 
+
+
 mention_list = []
 
 
@@ -44,23 +46,20 @@ def checkTeamStatus(mention_tweet):
       print("FOUND: " + mention_tweet + " in team list")
       return True
   return False
-      
 
-
-
-for x in range(len(mention_tweets)):
+for x in range(len(mention_tweets)-1,0,-1):
   mention_tweet = str(mention_tweets[x].text.split(
       " ", 1)[1].strip().replace("#", ""))
 
   isPlayer = checkPlayerStatus(mention_tweet.replace("live","").strip().upper())
 
-
   if(isPlayer and "live" in mention_tweet):
     #livePlayerStats(mention_tweet.replace("live","").upper())
     pass
   elif(isPlayer):
-    print(mention_tweet,end = " ")
-    print(ws.regularSeasonPlayer(mention_tweet.upper()))
+    playerStats = ws.regularSeasonPlayer(mention_tweet.upper())
+
+    api.update_status('@' + str(mention_tweets[x].user.screen_name) + '\n' + mention_tweet.lower() + ' 2018-2019 Stats:' + '\n\tAssists Per Game (APG): ' + str(playerStats[0]) + '\n\tPoints Per Game (PPG): ' + str(playerStats[1]) + '\n\tRebounds Per Game (RPG): ' + str(playerStats[2]))
   else:
     isTeam = checkTeamStatus(mention_tweet.replace("live", "").upper())
 
@@ -69,8 +68,16 @@ for x in range(len(mention_tweets)):
       pass
     elif(isTeam):
       print(mention_tweet,end = " ")
-      print(ws.regularSeasonTeam(mention_tweet.upper()))
-      print(ws.streakStatus(mention_tweet.upper()))
+      teamRecord = (ws.regularSeasonTeam(mention_tweet.upper()))
+      streak_dict = ws.streakStatus(mention_tweet.upper())
+      
+      streak_string = " "
+      for key in streak_dict:
+        if(key == 'L'):
+          api.update_status('@' + str(mention_tweets[x].user.screen_name) + '\n' + mention_tweet.lower() + ' 2018-2019 Record: ' + str(teamRecord[0]) + "-" + str(teamRecord[1]) + '\n' + 'Yikes! Currently on a ' + str(streak_dict[key])  + ' game(s) ' + key + 'osing streak')
+        else:
+          api.update_status('@' + str(mention_tweets[x].user.screen_name) + '\n' + mention_tweet.lower() + ' 2018-2019 Record: ' + str(teamRecord[0]) + "-" + str(teamRecord[1]) + '\n' + 'Yay! Currently on a ' + str(streak_dict[key])  + ' game(s) ' + key + 'inning streak')
+
     else:
       print("error! you are not a player or a team")
 
@@ -80,8 +87,3 @@ for x in range(len(mention_tweets)):
 
 
   
-
-
-
-
-
