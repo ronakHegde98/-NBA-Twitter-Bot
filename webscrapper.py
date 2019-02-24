@@ -26,8 +26,8 @@ def regularSeasonPlayer(playerName):
 
     for x in range (len(season19)):
         if(season19[x]['name'].replace(" " ,"").upper() == playerName):
-            rebounds = ((season19[x]['offensive_rebounds'])) + ((season19[x]['defensive_rebounds']))
-            playerStats.append(rebounds/(season19[x]['games_played']))
+            rebounds = (((season19[x]['offensive_rebounds'])) + ((season19[x]['defensive_rebounds'])))/(season19[x]['games_played'])
+            playerStats.append(rebounds)
             #print (rebounds)
 
     return playerStats
