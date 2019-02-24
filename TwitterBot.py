@@ -27,11 +27,6 @@ mention_list = []
 def livePlayerStats(playerName):
   pass
 
-def regularSeasonPlayer(playerName):
-  pass
-
-def regularSeasonTeam(teamName):
-  pass
 
 def liveTeamStats(teamName):
   pass
@@ -68,7 +63,7 @@ for x in range(len(mention_tweets)):
     print(ws.regularSeasonPlayer(mention_tweet.upper()))
   else:
     isTeam = checkTeamStatus(mention_tweet.replace("live", "").upper())
-    
+
     if(isTeam and "live" in mention_tweet):
       #liveTeamStats(mention_tweet.replace("live",""))
       pass
